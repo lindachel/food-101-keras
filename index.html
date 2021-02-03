@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Projet Linux MoSEF</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="logo">
+							<span class="icon fa-gem"></span>
+						</div>
+						<div class="content">
+							<div class="inner">
+								<h1>Food Classification</h1>
+								<p>with Deep Learning in Keras / Tensorflow</p>
+							</div>
+						</div>
+						<nav>
+							<ul>
+								<li><a href="#intro">Choix du dépôt</a></li>
+								<li><a href="#work">Présentation</a></li>
+								<li><a href="#about">Contributeurs</a></li>
+								<li><a href="#contact">Suggestions</a></li>
+								<!--<li><a href="#elements">Elements</a></li>-->
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Choix du projet -->
+							<article id="intro">
+								<h2 class="major">Choix du dépôt</h2>
+								<span class="image main"><img src="images/image_01.jpg" alt="" /></span>
+								<p><B>Titre du dépôt</B> : Food Classification with Deep Learning in Keras / Tensorflow</p>
+								<p><B>Auteur</B> : Patrick Rodriguez <a href="https://github.com/stratospark">(https://github.com/stratospark)</a></p>
+								<p><B>En quoi consiste le projet</B> : classification des images de plats par des réseaux de neurones.
+									Des images de nourritures sont contenues dans la base sur laquelle le modèle apprend. Chaque image représente un plat.
+									La classe est aussi connue et donne la catégorie du plat. Il y a 101 catégories au total (de 0 à 100) et 1000 images.
+									En donnant une image au modèle, celui-ci peut ensuite donner la catégorie du repas.
+									Une <a href="#work">description plus en détails du projet</a> est faite ensuite.</p>
+								<p><B>Pourquoi avoir choisi ce dépôt</B> : La problématique, l'utilisation de Deep Learning nous ont tout de suite intéressées.
+									Puis lorsque ca parle de nourriture, ca nous parle :).</p>
+							</article>
+
+						<!-- Présentation du projet -->
+							<article id="work">
+								<h2 class="major">Présentation du projet</h2>
+								<span class="image main"><img src="images/image_02.jpeg" alt="" /></span>
+								<p><B>Génèse du projet </B>: <br>
+									Le créateur aime la cuisine maison et la bonne cuisine en général.
+									Il prend un modèle pré entraîné de Keras sur lequel il applique ses données.
+									Il n’y précise pas de raison exacte à la sélection de ce sujet.</p>
+								<p><B>Algorithme des CNN </B>: <br>
+									Des images sont utilisées en données d’entrée pour l’apprentissage du modèle.
+									Celles-ci passent ensuite à travers plusieurs couches du réseau de neurones.
+									Tout d’abord, avec la première couche de neurones, une matrice de filtre est utilisée.
+									Celle-ci contient des poids qui vont construire une combinaison linéaire des pixels sur une région de l’image traitée.
+									Chaque neurone prend en compte une partie de l’image.
+									Cependant, la même matrice est utilisée par chaque neurone (pour chaque région de l’image) pour éviter d’augmenter le nombre de paramètres (et donc overffiter);
+									car les poids de ces matrices sont les paramètres du modèle.
+									Nous obtenons donc une nouvelle image reproduite suite aux combinaisons linéaires faites par la matrice kernel, et après mise en place de la fonction d’activation.
+									C’est la couche de convolution. Des couches de max pooling et de average pooling sont aussi utilisées après la convolution.
+									Celles-ci permettent de réduire la taille des images. <br>
+									Pour chaque région de l’image de départ (donc après convolution), la moyenne (ou le maximum) des pixels est gardée pour créer une nouvelle image plus petite.
+									Cela se refait plusieurs fois à travers plusieurs couches. Enfin, en sortie nous retrouvons la classe à laquelle appartient chaque image.
+									Pour trouver les paramètres optimaux, il faut minimiser la fonction de perte.
+									Nous recherchons donc les paramètres qui permettent cela. Pour arriver à ce modèle, il est possible d’utiliser la descente de gradient ou encore des méthodes telles qu’Adam.
+									Il est ensuite possible de calculer l’accuracy sur le test pour avoir le taux de bonne prédiction des classes. <br>
+									En deep learning il existe d’autres métriques plus précise qui sont les suivante : </p>
+									<ul>
+										<li>top 1 accuracy qui détermine le nombre de fois où la vraie classe correspond à la classe prédite qui a la plus forte probabilité.</li>
+										<li>top 5 accuracy, c’est combien de fois la classe réelle fait partie des 5 classes prédites avec le plus de probabilité.</li>
+									</ul>
+
+								<p><B>Etapes du projet </B>: </p>
+									<ol>
+										<li><B>Redimension des images </B>qui sont inférieures à une certaine taille pour pouvoir prendre des crops de taille correcte lors de la data augmentation (prendre des parties d’image).</li>
+										<li>Séparation <B>train/test</B> déjà faite. (25 000 et 75 000 environs)</li>
+										<li><B>Encodage de chaque classe</B> (vecteur binaire) pour éviter d’avoir une seule variable qui peut prendre plusieurs classes en valeurs.</li>
+										<li>Ensuite une technique de <B>data augmentation</B> (qui correspond au fait de mettre les images sous plusieurs angles différents pour que l’algorithme puisse les reconnaître à chaque fois même s’il y a des modifications) : utili
+											sation du cropping ici qui est l’une des méthodes existantes.</li>
+										<li><B>Dans un premier temps crop 1</B> : ImageNet ré entraîné sur le modèle Google Inception V3 (qui est connu pour avoir l’un des meilleurs résultats par rapport à d’autres modèles → voir diapo 3 conv_net slide 73 du cours).
+											Tout d’abord un seul crop est pris (c’est-à-dire juste une partie de l’image). Architecture : des couches de convolution, de average pooling, max pooling, des concat, 2 fully connected, 2 softmax à la fin, 1 dropout à la fin aussi (voir le schéma).
+											Image de taille (299, 299, 3) -> 3 le nombre de chanel. 1 chanel = 1 couleurs (rouge, bleu et jaune). Descente de gradient prend comme learning rate 0.01 et momentum de 0.9. La fonction de perte est la cross entropie catégorielle. 32 epoch (itérations).</li>
+										<li><B>Ensuite test avec crop 10</B> : Image en haut à gauche, en haut à droite, en bas à gauche, en bas à droite et au centre sont sélectionnées à chaque fois. On reprend ces mêmes régions de l’image sur l’image inversée. Ce qui fait un total de 10.
+											C’est fait sur les données du test. Après création de ces crop, le but est de les prédire afin d’évaluer la précision de leur prédiction. Il reprend le modèle utilisé sur le train et essaye de prédire les images du test (après avoir établit les crops de 10).
+											Pour chaque image, nous disposons donc de 10 prédictions (pour chaque crop). De meilleurs résultats au niveau de l’accuracy sont retrouvés avec cette méthode, plutôt qu’avec crop 1. </li>
+									</ol>
+								<p><B>Résultats et performance de l'algorithme :</B></p>
+									<ul>
+										<li><U>Avec crop 1 </U>: loss: 0.5638 - acc: 0.8663 - val_loss: 0.6895 - val_acc: 0.8159 (bizarre car dans l’intro donne une autre chiffre : 82.03%)</li>
+										<li><U>Sur le test</U>, avec crop 10, on obtient donc de meilleurs résultats qu’avec le crop 1 : <br>
+											Top-1 Accuracy, 10-Crop: 86.97% <br>
+											Top-5 Accuracy, 10-Crop: 97.42%
+										</li>
+									</ul>
+								<p>Nous pouvons également regarder la matrice de confusion ou on a aussi un classement des plats par ordre décroissant de l’accuracy (le moins bien classé est le steak et le meilleur est l'edamame).</p>
+
+								<p>Un détail des <a href="#about">contributeurs et changements majeurs</a> est fourni ensuite.</p>
+
+							</article>
+
+						<!-- Contributeurs -->
+							<article id="about">
+								<h2 class="major">Contributeurs <br> et changements majeurs</h2>
+								<span class="image main"><img src="images/image_03.jpg" alt="" /></span>
+								<p><B>Contributeur :</B><br>
+									Il semble qu’il y ait 1 seul et unique contributeur : <a href="https://github.com/stratospark">“stratospark”</a>, ou encore “Patrick Rodriguez”.
+									Membre actif de la plateforme, avec 47 repos (dont 20 dont il est propriétaire, et 27 fork), et un total de 615 contributions de Février 2020 à février 2021 !
+								</p>
+								<p><B>Composition du dépôt Github:</B></p>
+								<ul>
+									<li><B>un README.md </B>: Le readme contient aussi un lien permettant d’utiliser le classifier en ligne.
+										On peut fournir en entrée l’URL d’une image et le classifier retourne les probabilités d’appartenance de l’image à 5 classes de plats.
+										(<a href="http://blog.stratospark.com/deep-learning-applied-food-classification-deep-learning-keras.html">http://blog.stratospark.com/deep-learning-applied-food-classification-deep-learning-keras.html)</a></li>
+									<li><B>un fichier de LICENSE, ici MIT License</B>:
+										La licence MIT donne aux utilisateurs l'autorisation expresse de réutiliser le code dans n'importe quel but, parfois même si le code fait partie d'un logiciel propriétaire.
+										Tant que les utilisateurs incluent la copie originale de la licence MIT dans leur distribution, ils peuvent apporter des changements ou des modifications au code pour répondre à leurs propres besoins.</li>
+									<li><B>un fichier requirements.txt :</B>
+										Tous les packages à installer et leurs versions.</li>
+									<li><B>un fichier Python food.py :</B>
+										contient l’algorithme de Deep Learning appliqué.</li>
+									<li><B>un Jupyter notebook (Python) :</B>
+										permet d’avoir des informations sur le GPU et notamment le pourcentage de GPU utilisé en fonction du temps (graphiques).</li>
+									<li><B>Un répertoire d’images (jpg)</B> pour le modèle.</li>
+								</ul>
+
+								<p><B>Pull requests ans issues :</B><br>
+								Le projet est composé d’une unique branche “master”.
+									On ne compte aucune “pull request”.
+									En revanche, on dénombre 20 “issues” encore ouvertes et 4 fermées.</p>
+
+								<p>Nous listons ensuite des <a href="#contact">suggestions d'améliorations</a> concernant l'utilisation de cet algorithme de classification de nourriture.</p>
+							</article>
+
+						<!-- Suggestions d'amélioration -->
+							<article id="contact">
+								<h2 class="major">Suggestions d'amélioration</h2>
+								<span class="image main"><img src="images/image_04.png" alt="" /></span>
+								<ul>
+									<li><B>Augmentation du nombre d’images / plus de classes / différentes variétés culturelles :</B><br>
+										Pour améliorer le projet actuel il serait peut-être intéressant d’augmenter le nombre
+										d’images qui permettra d’améliorer la précision qui est déjà élevée, ou alors de
+										mettre en place plus de classes pour avoir des plats plus variés qui intègrent des
+										spécialités de plus de pays.</li>
+									<li><B>Détection des ingrédients / allergènes :</B><br>
+										L’idée serait d’utiliser cet algorithme afin de pouvoir détecter la présence de certains aliments dans les plats.
+										Lors de l’affichage du nom du plat qui est représenté sur l’image, d’afficher une liste des ingrédients fréquemment contenus dans le plat.
+										Par exemple, pour des sushis nous retrouverons : riz, algue, sel, sucre, saumon.<br>
+										Cette idée permettrait aux personnes ayant des contraintes alimentaires de pouvoir être informées par la présence de certains produits tels que le lactose, le gluten, la viande, ou même les œufs pour les végétaliens.
+										Pour arriver à cela, il faudrait créer une colonne à côté de celle des classes, qui contiendrait ces informations.
+										Pour cela il faudrait ajouter une colonne ingrédients dans le premier fichier <I>food-101/meta/classes.txt</I> dans lequel se trouve les noms et les numéros de classe.
+										Pour chaque classe les liste d’ingrédients serait listé dans cette nouvelle colonne. On crée ensuite un dictionnaire qui prendrait en clé le nom de la classe et en valeurs la liste d’ingrédients. Cela est fait dans l’étape de la création des dictionnaires de classe et d’index.
+										Puis ajouter un print du dictionnaire des ingrédients en fonction de la classe qui a été prédite à la toute fin du notebook.</li>
+									<li><B>Interaction avec l'utilisateur :</B><br>
+										De plus, pour aller plus loin, il serait aussi possible de mettre en place une interaction avec l’utilisateur.
+										Celui-ci pourrait entrer l’aliment dont il ne veut pas ainsi que l’image du plat qu’il souhaite manger; l’algorithme pourrait donc lui répondre si oui ou non il est autorisé à en consommer.<br>
+										Ou alors l’utilisateur pourrais donner un aliment qui voudrait manger (car il lui reste de cet aliments dans son frigo et il ne veut pas gacher par exemple) et le programme retournerai une liste de plats réalisable avec cet ingrédient.</li>
+									<li><B>Aide aux consommateurs étrangers :</B><br>
+										Une autre utilisation de ce projet pourrait être intéressante. Celle-ci serait de pouvoir localiser les lieux (tel que les supermarchés ou les restaurants) où le plat est disponible.
+										Il peut être pratique d’utilisation en pour les touristes par exemple.</li>
+								</ul>
+
+							</article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; By : Léa LAVAL, Feriel GUEDIDI, Linda CHELABI.</p>
+					</footer>
+
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

@@ -1685,3 +1685,4 @@ json.dumps(ix_to_class)
 
 
 Voici le lien de notre Github Page pour le projet Linux :
+https://lindachel.github.io/food-101-keras/
